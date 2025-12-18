@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Zhewen Yin - Material Science Profile</title>
+    
+    <!-- 1. Bootstrap 5 CSS (布局) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- 2. AOS CSS (滚动动画库) -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- 3. Google Fonts (字体) -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- 4. FontAwesome & Academicons (图标) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+    <style>
+        :root {
+            /* 核心配色：深岩灰 + 科技蓝 + 活力橙(点缀) */
+            --primary-color: #2c3e50; 
+            --secondary-color: #3498db; 
+            --accent-color: #e74c3c;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Lato', 'Noto Sans SC', sans-serif;
+            color: var(--text-color);
+            line-height: 1.8;
+            overflow-x: hidden; /* 防止动画导致的水平滚动条 */
+        }
+
+        h1, h2, h3, .navbar-brand {
+            font-family: 'Playfair Display', 'Noto Sans SC', serif;
+            color: var(--primary-color);
+        }
+
+        /* --- 自定义背景设置 --- */
+        .bg-hero {
+            position: relative;
+            /* ★在此处更换您的背景图★ */
+            background-image: url('https://scx2.b-cdn.net/gfx/news/hires/2016/graphene.jpg?q=80&w=1920&auto=format&fit=crop'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed; /* 视差滚动效果 */
+        }
+        /* 背景遮罩层 - 保证文字可读性 */
+        .bg-hero::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(255, 255, 255, 0.88); /* 调整最后的数值(0-1)改变透明度 */
+            z-index: 0;
+        }
+        .bg-hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 15px rgba(0,0,0,0.04);
+            padding: 15px 0;
+        }
+        .nav-link {
+            font-weight: 600;
+            color: var(--primary-color) !important;
+            margin-left: 20px;
+            transition: 0.3s;
+        }
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+        }
+
+        section {
+            padding: 100px 0;
+            overflow: hidden; /* 配合AOS防止溢出 */
+        }
+        
+        .section-title {
+            margin-bottom: 60px;
+            position: relative;
+            text-align: center;
+            font-weight: 700;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--secondary-color);
+            margin: 15px auto 0;
+        }
+
+        /* Research 卡片 */
+        .research-card {
+            margin-bottom: 70px;
+        }
+        .research-img-wrapper {
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .research-img-wrapper:hover {
+            transform: translateY(-5px);
+        }
+        .research-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .research-tag {
+            color: var(--secondary-color);
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* 按钮样式 */
+        .btn-custom {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50px;
+            padding: 10px 30px;
+            border: none;
+            transition: all 0.3s;
+        }
+        .btn-custom:hover {
+            background-color: #1a252f;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        .btn-outline-custom {
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 50px;
+            padding: 8px 25px;
+            background: transparent;
+            transition: all 0.3s;
+        }
+        .btn-outline-custom:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Publications 列表 */
+        .pub-item {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: 25px 0;
+            transition: background 0.2s;
+        }
+        .pub-item:hover {
+            background-color: #fcfcfc;
+        }
+        .pub-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #222;
+            margin-bottom: 5px;
+        }
+
+        /* 复制成功提示 Toast */
+        .copy-toast {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: rgba(44, 62, 80, 0.9);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 9999;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .copy-toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+/* --- Citation Map 样式 --- */
+        .impact-map-container {
+            position: relative;
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            margin-top: 60px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .impact-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(255,255,255,0.95), rgba(255,255,255,0));
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .stat-box {
+            text-align: center;
+            padding: 0 15px;
+        }
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+        }
+        .stat-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #666;
+        }
+        /* 列表悬停效果 */
+        .hover-bg-light {
+            transition: background-color 0.3s;
+        }
+        .hover-bg-light:hover {
+            background-color: rgba(0,0,0,0.03);
+        }
+        /* Contact 图标 */
+        .contact-btn {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            border: 2px solid #eee;
+            margin: 0 15px;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        .contact-btn:hover {
+            border-color: var(--primary-color);
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        .lang-cn { display: none; }
+        
+        footer {
+            background: var(--primary-color);
+            color: #ccc;
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbarNav">
+
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">Dr. Zhewen Yin</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="#home"><span class="lang-en">Home</span><span class="lang-cn">主页</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#research"><span class="lang-en">Research</span><span class="lang-cn">研究领域</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#publications"><span class="lang-en">Publications</span><span class="lang-cn">发表文章</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#teaching"><span class="lang-en">Teaching</span><span class="lang-cn">教学理念</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact"><span class="lang-en">Contact</span><span class="lang-cn">联系方式</span></a></li>
+                    <li class="nav-item ms-3">
+                        <button class="btn btn-sm btn-outline-dark rounded-pill px-3" onclick="toggleLanguage()">中 / EN</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Home (主页) -->
+    <!-- data-aos="fade-in": 整体淡入 -->
+    <section id="home" class="bg-hero d-flex align-items-center" style="min-height: 100vh;">
+        <div class="container" data-aos="fade-in" data-aos-duration="1500">
+            <div class="row align-items-center">
+                <div class="col-md-5 text-center order-md-2">
+                    <img src="images/Professional photo_2.jpg" alt="Profile Picture" class="rounded-circle shadow-lg bg-white p-1" style="width: 300px; height: 300px; object-fit: cover;">
+                </div>
+                <div class="col-md-7 order-md-1">
+                    <div class="mb-3 text-uppercase" style="letter-spacing: 2px; color: var(--secondary-color); font-weight: 700;">
+                        <span class="lang-en">Department of Mechanical Engineering</span>
+                        <span class="lang-cn">机械工程系</span>
+                    </div>
+                    <h1 class="display-4 fw-bold mb-4">
+                        <span class="lang-en">Zhewen Yin</span>
+                        <span class="lang-cn">尹哲文</span>
+                    </h1>
+                    <p class="lead mb-4 text-muted" style="max-width: 600px;">
+                        <span class="lang-en">Ph.D. in Mechanical & Materials Engineering specializing in the fabrication, characterization, and advanced manufacturing of <strong>Two-dimensional Materials</strong>. Solid experience in multidisciplinary research across materials science, environmental engineering, and chemical fields.</span>
+                        <span class="lang-cn">机械与材料工程博士，专注于<strong>二维材料</strong>的制备、表征和先进制造。在材料科学、环境工程和化学领域的多学科研究中积累了丰富的经验。</span>
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="#contact" class="btn btn-custom">
+                            <span class="lang-en">Get in Touch</span>
+                            <span class="lang-cn">与我联系</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Research (研究经历) -->
+    <section id="research">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">
+                <span class="lang-en">Research Highlights</span>
+                <span class="lang-cn">研究重点</span>
+            </h2>
+
+            <!-- 项目 1 -->
+            <div class="row align-items-center research-card" data-aos="fade-up">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="research-img-wrapper">
+                        <img src="images/Research1.jpg" class="research-img" alt="Research 1">
+                    </div>
+                </div>
+                <div class="col-lg-6 ps-lg-5">
+                    <span class="research-tag">Advanced Manufacturing</span>
+                    <h3 class="mb-3">
+                        <span class="lang-en">Scalable Nanomanufacturing of 2D Nanoribbons Via Controlled Fracture </span>
+                        <span class="lang-cn">通过可控断裂实现二维纳米带的批量制造</span>
+                    </h3>
+                    <p class="text-muted" style="text-align: justify;">
+                        <span class="lang-en">Pioneered a mechanical fracture method to achieve the scalable assembly of nanoribbons from diverse 2D materials with uniform width and spacing under ambient conditions (International Patent #WO2025015336A1). This technique provides a pathway for mass-producing high-density logic circuits, ultrasensitive gas sensors, and interconnects for next-generation nano-electronics.</span>
+                        <span class="lang-cn">研发了一种机械断裂方法，实现了在常温常压下从多种二维材料中批量组装具有均匀宽度和间距的纳米带（国际专利号 #WO2025015336A1）。该技术为大规模生产高密度逻辑电路、超灵敏气体传感器和下一代纳米电子器件的互连提供了途径。</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- 项目 2 -->
+            <div class="row align-items-center research-card flex-row-reverse" data-aos="fade-up">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="research-img-wrapper">
+                        <img src="images/Research2.jpg" class="research-img" alt="Research 2">
+                    </div>
+                </div>
+                <div class="col-lg-6 pe-lg-5 text-lg-end">
+                    <span class="research-tag">Nanomechanics & Strain Engineering</span>
+                    <h3 class="mb-3">
+                        <span class="lang-en">Strain Engineering of 2D Semiconductors</span>
+                        <span class="lang-cn">二维半导体的应变工程</span>
+                    </h3>
+                    <p class="text-muted" style="text-align: justify;">
+                        <span class="lang-en">Elucidated the directionally resolved strain-coupled phononic properties of monolayer MoTe<sub>2</sub> via in situ Raman spectroscopy to determine critical Grüneisen parameters. These findings establish a fundamental framework for tuning optoelectronic properties in flexible electronics and designing robust straintronic devices.</span>
+                        <span class="lang-cn">通过原位拉曼光谱阐明了单层 MoTe<sub>2</sub> 的方向分辨应变耦合声子特性，以确定关键的 Grüneisen 参数。这些发现为在柔性电子器件中调节光电特性以及设计鲁棒的应变电子器件奠定了基础。</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- 下载区域 -->
+            <div class="text-center mt-5 pt-5 border-top" data-aos="fade-up" data-aos-delay="100">
+                <p class="mb-4 text-muted">
+                    <span class="lang-en">For more details, please download my documents below:</span>
+                    <span class="lang-cn">如需更多详细信息，请下载以下文档：</span>
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <a href="#" class="btn btn-outline-custom">
+                        <i class="fas fa-file-alt me-2"></i> 
+                        <span class="lang-en">Download Resume (1 Page)</span>
+                        <span class="lang-cn">下载简历 (单页)</span>
+                    </a>
+                    <a href="#" class="btn btn-custom">
+                        <i class="fas fa-file-pdf me-2"></i> 
+                        <span class="lang-en">Download Full CV</span>
+                        <span class="lang-cn">下载完整履历 (CV)</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Publications (发表文章) -->
+    <section id="publications" class="bg-light">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up"><span class="lang-en">Selected Publications</span><span class="lang-cn">代表性论文</span></h2>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    
+                    <!-- 论文 1 -->
+                    <div class="pub-item" data-aos="fade-up">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="pub-title">Directionally-Resolved Phononic Properties of Monolayer 2D Molybdenum Ditelluride (MoTe<sub>2</sub>) under Uniaxial Elastic Strain</div>
+                                <div class="text-muted mb-1">
+                                    <strong>Zhewen Yin</strong>, Wyatt Panaccione, Anjun Hu, Ossie R. T. Douglas, Md Rubayat-E Tanjil, Yunjo Jeong, Huijuan Zhao, Michael Cai Wang.
+                                </div>
+                                <div class="text-secondary fst-italic small">
+                                    Nano Letters, 2023, 23(24), 11763-11770.
+                                </div>
+                            </div>
+                            <div class="ms-3 flex-shrink-0">
+                                <!-- 这里的第二个参数是示例 BibTeX，实际使用请替换 -->
+                                <button class="btn btn-sm btn-outline-secondary text-nowrap" 
+                                    onclick="copyCitation(this, 'Yin, Zhewen, et al. "Directionally-Resolved Phononic Properties of Monolayer 2D Molybdenum Ditelluride (MoTe2) under Uniaxial Elastic Strain." Nano Letters 23.24 (2023): 11763-11770.')">
+                                    <i class="fas fa-quote-right"></i> <span class="lang-en">Cite</span><span class="lang-cn">引用</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 论文 2 -->
+                    <div class="pub-item" data-aos="fade-up">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="pub-title">Large Scale Self-assembly of Plasmonic Nanoparticles on Deformed Graphene Templates</div>
+                                <div class="text-muted mb-1">
+                                    Matthew T. Gole*, <strong>Zhewen Yin*</strong>, Michael Cai Wang*, Wayne Lin, Ziran Zhou, Juyoung Leem, Satoshi Takekuma, Catherine J. Murphy, SungWoo Nam.
+                                </div>
+                                <div class="text-secondary fst-italic small">
+                                    Scientific Reports, 2021, 11(1), 12232.
+                                </div>
+                            </div>
+                            <div class="ms-3 flex-shrink-0">
+                                <button class="btn btn-sm btn-outline-secondary text-nowrap" 
+                                    onclick="copyCitation(this, 'Gole, Matthew T., et al. "Large scale self-assembly of plasmonic nanoparticles on deformed graphene templates." Scientific reports 11.1 (2021): 12232.')">
+                                    <i class="fas fa-quote-right"></i> <span class="lang-en">Cite</span><span class="lang-cn">引用</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 论文 3 -->
+                    <div class="pub-item" data-aos="fade-up">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="pub-title">Effects of Hydrodynamics on the Cross-Sectional Distribution and Transport of Plastic in an Urban Coastal River</div>
+                                <div class="text-muted mb-1">
+                                    Charlotte J. Haberstroh, Mauricio E. Arias, <strong>Zhewen Yin</strong>, Michael Cai Wang.
+                                </div>
+                                <div class="text-secondary fst-italic small">
+                                    Water Environment Research, 2021, 93(2), 186-200.
+                                </div>
+                            </div>
+                            <div class="ms-3 flex-shrink-0">
+                                <button class="btn btn-sm btn-outline-secondary text-nowrap" 
+                                    onclick="copyCitation(this, 'Haberstroh, Charlotte J., et al. "Effects of hydrodynamics on the cross-sectional distribution and transport of plastic in an urban coastal river." Water Environment Research 93.2 (2021): 186-200.')">
+                                    <i class="fas fa-quote-right"></i> <span class="lang-en">Cite</span><span class="lang-cn">引用</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+<!-- 论文 4 -->
+                    <div class="pub-item" data-aos="fade-up">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="pub-title">Engineering Surface and Morphology of La/WO<sub>3</sub> for Electrochemical Oxygen Reduction</div>
+                                <div class="text-muted mb-1">
+                                    Swetha Ramani, <strong>Zhewen Yin</strong>, Bradley Miller, Venkat R Bhethanabotla, John N Kuhn.
+                                </div>
+                                <div class="text-secondary fst-italic small">
+                                    CrystEngComm, 2020, 22(13), 2397-2405.
+                                </div>
+                            </div>
+                            <div class="ms-3 flex-shrink-0">
+                                <button class="btn btn-sm btn-outline-secondary text-nowrap" 
+                                    onclick="copyCitation(this, 'Ramani, Swetha, et al. "Engineering surface and morphology of La/WO3 for electrochemical oxygen reduction." CrystEngComm 22.13 (2020): 2397-2405.')">
+                                    <i class="fas fa-quote-right"></i> <span class="lang-en">Cite</span><span class="lang-cn">引用</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 论文 5 -->
+                    <div class="pub-item" data-aos="fade-up">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="pub-title">Ångström-Scale, Atomically Thin 2D Materials for Corrosion Mitigation and Passivation</div>
+                                <div class="text-muted mb-1">
+                                    Md Rubayat-E Tanjil, Yunjo Jeong, <strong>Zhewen Yin</strong>, Wyatt Panaccione, Michael Cai Wang.
+                                </div>
+                                <div class="text-secondary fst-italic small">
+                                    Coatings, 2019, 9(2), 133.
+                                </div>
+                            </div>
+                            <div class="ms-3 flex-shrink-0">
+                                <button class="btn btn-sm btn-outline-secondary text-nowrap" 
+                                    onclick="copyCitation(this, 'Tanjil, Md Rubayat-E., et al. "Ångström-scale, atomically thin 2D materials for corrosion mitigation and passivation." Coatings 9.2 (2019): 133.')">
+                                    <i class="fas fa-quote-right"></i> <span class="lang-en">Cite</span><span class="lang-cn">引用</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-5" data-aos="fade-up">
+                <a href="https://scholar.google.com/citations?hl=zh-CN&user=BviUIlgAAAAJ&view_op=list_works&authuser=1" target="_blank" class="text-decoration-none fw-bold" style="color: var(--primary-color);">
+                    <span class="lang-en">View all publications on Google Scholar <i class="fas fa-arrow-right ms-1"></i></span>
+                    <span class="lang-cn">在 Google Scholar 查看所有论文 <i class="fas fa-arrow-right ms-1"></i></span>
+                </a>
+            </div>
+            <!-- Global Impact / Citation Map Section -->
+            <div class="row justify-content-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="col-lg-10">
+                    <div class="impact-map-container">
+                        <div class="p-4 border-bottom">
+                            <h4 class="mb-0"><i class="fas fa-globe-americas me-2 text-secondary"></i> <span class="lang-en">Global Citation Distribution</span><span class="lang-cn">全球引文分布</span></h4>
+                            <p class="text-muted small mb-0 mt-1">
+                                <span class="lang-en">Locations of citing authors (Generated via Google Scholar data)</span>
+                                <span class="lang-cn">引用者所在的地理位置分布</span>
+                            </p>
+                        </div>
+                        
+                        <!-- 
+                           ★ 关键步骤 ★ 
+                           1. 这里目前是一张占位图。
+                           2. 您可以使用开源工具 "CitationMap" (https://github.com/ChenLiu-1996/CitationMap)
+                              运行: generate_citation_map('BviUIlgAAAAJ') 
+                              生成您自己的 HTML 地图或截图。
+                           3. 将生成的图片保存为 citation_map.png 并替换下方的 src。
+                        -->
+                        <div style="position: relative; height: 400px; background-color: #f8f9fa;">
+                            <!-- 占位图：这里使用了一张通用的点阵世界地图，建议替换为您真实的截图 -->
+                            <iframe src="images/citation_map.html" style="border:0; width:100%; height:100%;"></iframe>
+                            <!--<img src="images/citation_map.png"     
+                            alt="Citation Map" 
+                                 style="width: 100%; height: 100%; object-fit: cover; opacity: 0.8;"> -->
+                            
+                            <!-- 浮动统计数据 (根据您的 Google Scholar 链接手动填入的数据) -->
+                            <div class="impact-overlay">
+                                <div class="d-flex">
+                                    <div class="stat-box border-end">
+                                        <span class="stat-number">276+</span>
+                                        <span class="stat-label">Citations</span>
+                                    </div>
+                                    <div class="stat-box border-end">
+                                        <span class="stat-number">7</span>
+                                        <span class="stat-label">h-index</span>
+                                    </div>
+                                    <div class="stat-box">
+                                        <span class="stat-number">5</span>
+                                        <span class="stat-label">i10-index</span>
+                                    </div>
+                                </div>
+                                <div class="text-end d-none d-md-block">
+                                    <a href="https://scholar.google.com/citations?user=BviUIlgAAAAJ" target="_blank" class="btn btn-sm btn-dark rounded-pill px-3">
+                                        Visit Profile <i class="fas fa-arrow-right ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Teaching Philosophy -->
+    <section id="teaching">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up"><span class="lang-en">Teaching Philosophy</span><span class="lang-cn">教学理念</span></h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8 text-center" data-aos="zoom-in">
+                    <i class="fas fa-atom fa-3x text-secondary mb-4"></i>
+                    <blockquote class="blockquote mb-4">
+                        <p class="mb-3">
+                            <span class="lang-en">"I strive to demystify the complex world of materials science by connecting atomic-scale theories with macroscopic phenomena observable in daily life."</span>
+                            <span class="lang-cn">“我致力于通过将原子尺度的理论与日常生活中可观察到的宏观现象联系起来，揭开材料科学的神秘面纱。”</span>
+                        </p>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+        <!-- 新增：TA 课程列表 (紧凑双语版) -->
+            <div class="row justify-content-center mt-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="col-lg-8">
+                    <!-- 分割线与标题 -->
+                    <div class="text-center mb-3 pt-3 border-top border-secondary-subtle">
+                        <h5 class="fw-bold" style="color: var(--primary-color);">
+                            <span class="lang-en">Teaching Assistant Experience</span>
+                            <span class="lang-cn">助教课程经历</span>
+                        </h5>
+                    </div>
+
+                    <div class="row g-2">
+                        <!-- 左栏 -->
+                        <div class="col-md-6">
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-1 d-flex align-items-center py-1 px-2 rounded hover-bg-light small">
+                                    <i class="fas fa-layer-group text-secondary me-2" style="width: 20px; text-align:center;"></i>
+                                    <span>
+                                        <span class="lang-en">Materials Engineering</span>
+                                        <span class="lang-cn">材料工程学</span>
+                                    </span>
+                                </li>
+                                <li class="mb-1 d-flex align-items-center py-1 px-2 rounded hover-bg-light small">
+                                    <i class="fas fa-cogs text-secondary me-2" style="width: 20px; text-align:center;"></i>
+                                    <span>
+                                        <span class="lang-en">Advanced Manufacturing</span>
+                                        <span class="lang-cn">先进制造</span>
+                                    </span>
+                                </li>
+                                <li class="mb-1 d-flex align-items-center py-1 px-2 rounded hover-bg-light small">
+                                    <i class="fas fa-atom text-secondary me-2" style="width: 20px; text-align:center;"></i>
+                                    <span>
+                                        <span class="lang-en">Fundamental of Nanoscience & Nanotech</span>
+                                        <span class="lang-cn">纳米科学与技术基础</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <!-- 右栏 -->
+                        <div class="col-md-6">
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-1 d-flex align-items-center py-1 px-2 rounded hover-bg-light small">
+                                    <i class="fas fa-laptop-code text-secondary me-2" style="width: 20px; text-align:center;"></i>
+                                    <span>
+                                        <span class="lang-en">Programming Concepts Mechanical Engineering</span>
+                                        <span class="lang-cn">机械工程编程概念</span>
+                                    </span>
+                                </li>
+                                <li class="mb-1 d-flex align-items-center py-1 px-2 rounded hover-bg-light small">
+                                    <i class="fas fa-flask text-secondary me-2" style="width: 20px; text-align:center;"></i>
+                                    <span>
+                                        <span class="lang-en">Intro to Chemical & Biomedical Engineering</span>
+                                        <span class="lang-cn">化学与生物医学工程导论</span>
+                                    </span>
+                                </li>
+                                <li class="mb-1 d-flex align-items-center py-1 px-2 rounded hover-bg-light small">
+                                    <i class="fas fa-microscope text-secondary me-2" style="width: 20px; text-align:center;"></i>
+                                    <span>
+                                        <span class="lang-en">Intro to Raman Spectroscopy</span>
+                                        <span class="lang-cn">拉曼光谱学导论</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- 5. Contact (联系方式) -->
+    <section id="contact" class="bg-light">
+        <div class="container text-center">
+            <h2 class="section-title" data-aos="fade-up"><span class="lang-en">Contact & Profiles</span><span class="lang-cn">联系与学术主页</span></h2>
+            
+            <p class="lead mb-5" data-aos="fade-up">
+                <i class="fas fa-envelope me-2 text-secondary"></i> yzw994@gmail.com
+            </p>
+
+            <div class="d-flex justify-content-center align-items-center flex-wrap" data-aos="fade-up" data-aos-delay="100">
+                <!-- LinkedIn -->
+                <a href="https://www.linkedin.com/in/zhewen-yin-5397a3160/" target="_blank" class="contact-btn" title="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <!-- Google Scholar -->
+                <a href="https://scholar.google.com/citations?hl=zh-CN&user=BviUIlgAAAAJ&view_op=list_works&authuser=1" target="_blank" class="contact-btn" title="Google Scholar">
+                    <i class="ai ai-google-scholar"></i>
+                </a>
+                <!-- ResearchGate -->
+                <a href="#" target="_blank" class="contact-btn" title="ResearchGate">
+                    <i class="ai ai-researchgate"></i>
+                </a>
+            </div>
+
+            <p class="text-muted mt-5 small" data-aos="fade-up" data-aos-delay="200">
+                <span class="lang-en">Office: Room 207, IDR Building, University of South Florida</span><br>
+                <span class="lang-cn">办公室：IDR 楼 207 室，南佛罗里达大学</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Dr. Zhewen Yin. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JS 逻辑 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- 引入 AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // 1. 初始化 AOS 滚动动画
+        AOS.init({
+            duration: 1000, // 动画持续 1 秒
+            once: true,     // 动画只播放一次
+            offset: 100     // 触发位置偏移
+        });
+
+        // 2. 语言切换逻辑
+        let currentLang = 'en';
+        function toggleLanguage() {
+            const enElements = document.querySelectorAll('.lang-en');
+            const cnElements = document.querySelectorAll('.lang-cn');
+            if (currentLang === 'en') {
+                enElements.forEach(el => el.style.display = 'none');
+                cnElements.forEach(el => el.style.display = 'inline');
+                currentLang = 'cn';
+            } else {
+                cnElements.forEach(el => el.style.display = 'none');
+                enElements.forEach(el => el.style.display = 'inline');
+                currentLang = 'en';
+            }
+        }
+
+        // 3. 复制 Citation 功能
+        function copyCitation(btn, text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // 显示 Toast 提示
+                const toast = document.createElement('div');
+                toast.className = 'copy-toast show';
+                toast.innerHTML = '<i class="fas fa-check-circle me-2"></i> Copied to Clipboard!';
+                document.body.appendChild(toast);
+
+                // 按钮视觉反馈
+                const originalHtml = btn.innerHTML;
+                btn.classList.remove('btn-outline-secondary');
+                btn.classList.add('btn-success', 'text-white');
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+
+                // 2秒后恢复
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => toast.remove(), 300);
+                    
+                    btn.classList.remove('btn-success', 'text-white');
+                    btn.classList.add('btn-outline-secondary');
+                    btn.innerHTML = originalHtml;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

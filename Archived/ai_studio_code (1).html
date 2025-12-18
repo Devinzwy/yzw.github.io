@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Your Name - Material Science Profile</title>
+    
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&family=Noto+Sans+SC:wght@300;400;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        :root {
+            /* 配色方案：深蓝灰 + 科技蓝 + 高级灰 */
+            --primary-color: #203a43; 
+            --secondary-color: #2c5364;
+            --accent-color: #c0392b;
+            --bg-light: #fcfcfc;
+        }
+
+        body {
+            font-family: 'Lato', 'Noto Sans SC', sans-serif;
+            color: #333;
+            line-height: 1.8;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .navbar-brand {
+            font-family: 'Playfair Display', 'Noto Sans SC', serif;
+            color: var(--primary-color);
+        }
+
+        /* --- 核心改动：二维材料结构背景 (Graphene/Hexagonal Pattern) --- */
+        .bg-graphene {
+            background-color: #fdfdfd;
+            /* 这里使用 SVG Data URI 生成六边形晶格纹理，颜色极淡，不影响阅读 */
+            background-image: url("data:image/svg+xml,%3Csvg width='24' height='42' viewBox='0 0 24 42' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h24v42H0z' fill='%23ffffff' fill-opacity='0'/%3E%3Cpath d='M12 11.5V7.4l9.6-5.6V-2L12-7.6V-12h-.1l-9.5 5.6v4.2L12 3.4V7.5zm0 23V30.4l9.6-5.6v-3.8L12 15.4v-4.1l-9.5 5.6v3.8L12 26.3V30.4zM12 34.5V30.4l9.6 5.6v3.8L12 45.4v4.1l-9.5-5.6v-3.8L12 34.5v-4.1z' stroke='%232c5364' stroke-opacity='0.08' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+            background-size: 40px 70px; /* 调整晶格大小 */
+        }
+
+        /* 导航栏 */
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px); /* 毛玻璃效果 */
+            box-shadow: 0 1px 15px rgba(0,0,0,0.05);
+            padding: 15px 0;
+        }
+        .nav-link {
+            font-weight: 600;
+            color: var(--primary-color) !important;
+            margin-left: 20px;
+            letter-spacing: 0.5px;
+            transition: 0.3s;
+        }
+        .nav-link:hover {
+            color: var(--accent-color) !important;
+        }
+
+        section {
+            padding: 100px 0;
+        }
+        
+        .section-title {
+            margin-bottom: 60px;
+            position: relative;
+            text-align: center;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--secondary-color);
+            margin: 15px auto 0;
+        }
+
+        /* Research 图片展示卡片 */
+        .research-card {
+            margin-bottom: 60px;
+            border: none;
+            background: transparent;
+        }
+        .research-img-wrapper {
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+        .research-img-wrapper:hover {
+            transform: translateY(-5px);
+        }
+        .research-img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .research-content {
+            padding: 20px 10px;
+        }
+        .research-tag {
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--secondary-color);
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* 按钮 */
+        .btn-custom {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 50px;
+            padding: 12px 35px;
+            transition: 0.3s;
+        }
+        .btn-custom:hover {
+            background-color: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+
+        /* Publication 列表微调 */
+        .pub-item {
+            background: #fff;
+            border: 1px solid #eee;
+            padding: 25px;
+            margin-bottom: 15px;
+            transition: 0.2s;
+            border-left: 4px solid transparent;
+        }
+        .pub-item:hover {
+            border-left: 4px solid var(--secondary-color);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        /* Contact */
+        .contact-box {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+        }
+
+        .lang-cn { display: none; }
+        
+        footer {
+            background: #1a1a1a;
+            color: #888;
+            padding: 40px 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbarNav">
+
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#home">Dr. Your Name</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="#home"><span class="lang-en">Home</span><span class="lang-cn">主页</span></a></li>
+                    <!-- 将 CV 改为 Research -->
+                    <li class="nav-item"><a class="nav-link" href="#research"><span class="lang-en">Research</span><span class="lang-cn">研究领域</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#publications"><span class="lang-en">Publications</span><span class="lang-cn">发表文章</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#teaching"><span class="lang-en">Teaching</span><span class="lang-cn">教学理念</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact"><span class="lang-en">Contact</span><span class="lang-cn">联系方式</span></a></li>
+                    <li class="nav-item ms-3">
+                        <button class="btn btn-sm btn-outline-dark rounded-pill px-3" onclick="toggleLanguage()">中 / EN</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 1. Home (主页) - 带晶格背景 -->
+    <section id="home" class="bg-graphene d-flex align-items-center" style="min-height: 90vh;">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-5 text-center order-md-2">
+                    <!-- 头像 -->
+                    <img src="https://via.placeholder.com/350" alt="Profile" class="rounded-circle shadow-lg" style="width: 300px; height: 300px; object-fit: cover; border: 8px solid rgba(255,255,255,0.8);">
+                </div>
+                <div class="col-md-7 order-md-1">
+                    <div class="mb-3 text-uppercase text-muted" style="letter-spacing: 2px; font-size: 0.9rem;">
+                        <span class="lang-en">Material Science & Engineering</span>
+                        <span class="lang-cn">材料科学与工程</span>
+                    </div>
+                    <h1 class="display-4 fw-bold mb-4">
+                        <span class="lang-en">Dr. Your Name</span>
+                        <span class="lang-cn">XXX 博士</span>
+                    </h1>
+                    <p class="lead mb-4">
+                        <span class="lang-en">Exploring the frontiers of <strong>2D Materials</strong> and <strong>Nano-electronics</strong>. I focus on the synthesis, characterization, and device applications of novel low-dimensional materials.</span>
+                        <span class="lang-cn">探索<strong>二维材料</strong>与<strong>纳电子器件</strong>的前沿。我专注于新型低维材料的合成、表征及其在高性能器件中的应用。</span>
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="#contact" class="btn btn-custom">
+                            <span class="lang-en">Contact Me</span>
+                            <span class="lang-cn">联系我</span>
+                        </a>
+                        <!-- 首页也放一个简历下载，方便 HR -->
+                        <a href="#" class="btn btn-outline-secondary rounded-pill px-4 py-2">
+                            <i class="fas fa-file-pdf me-2"></i> 
+                            <span class="lang-en">CV</span>
+                            <span class="lang-cn">简历</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Research (研究经历/成果) - 图片主导 -->
+    <section id="research">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="lang-en">Research Highlights</span>
+                <span class="lang-cn">研究重点</span>
+            </h2>
+
+            <!-- 项目 1：左图右文 -->
+            <div class="row align-items-center research-card">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="research-img-wrapper">
+                        <!-- 建议放：高质量的材料结构渲染图或漂亮的显微镜照片 -->
+                        <img src="https://via.placeholder.com/600x400?text=Material+Structure+Rendering" class="research-img" alt="Research 1">
+                    </div>
+                </div>
+                <div class="col-lg-6 ps-lg-5">
+                    <div class="research-content">
+                        <span class="research-tag">Synthesis</span>
+                        <h3 class="mb-3">
+                            <span class="lang-en">Scalable Growth of 2D Monolayers</span>
+                            <span class="lang-cn">大面积二维单晶生长</span>
+                        </h3>
+                        <p class="text-muted">
+                            <span class="lang-en">Developing novel CVD strategies to achieve wafer-scale, high-mobility semiconductor monolayers. Our method significantly reduces grain boundaries and defects.</span>
+                            <span class="lang-cn">开发新型 CVD 策略以实现晶圆级、高迁移率的半导体单分子层生长。我们的方法显著减少了晶界和缺陷，为下一代电子器件奠定了基础。</span>
+                        </p>
+                        <a href="#" class="btn btn-link text-decoration-none p-0">
+                            <span class="lang-en">Read more <i class="fas fa-arrow-right ms-1"></i></span>
+                            <span class="lang-cn">了解更多 <i class="fas fa-arrow-right ms-1"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 项目 2：右图左文 (交替布局) -->
+            <div class="row align-items-center research-card flex-row-reverse">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="research-img-wrapper">
+                        <!-- 建议放：器件示意图或应用场景图 -->
+                        <img src="https://via.placeholder.com/600x400?text=Flexible+Device+Photo" class="research-img" alt="Research 2">
+                    </div>
+                </div>
+                <div class="col-lg-6 pe-lg-5">
+                    <div class="research-content text-lg-end">
+                        <span class="research-tag">Device Application</span>
+                        <h3 class="mb-3">
+                            <span class="lang-en">Flexible Nano-electronics</span>
+                            <span class="lang-cn">柔性纳电子器件</span>
+                        </h3>
+                        <p class="text-muted">
+                            <span class="lang-en">Integrating 2D materials into flexible substrates to create wearable sensors with high sensitivity. We explore the mechanical durability under extreme strain.</span>
+                            <span class="lang-cn">将二维材料集成到柔性基底上，制造具有高灵敏度的可穿戴传感器。我们主要研究器件在极端应变下的机械耐久性和光电响应。</span>
+                        </p>
+                        <a href="#" class="btn btn-link text-decoration-none p-0">
+                            <span class="lang-en">Read more <i class="fas fa-arrow-right ms-1"></i></span>
+                            <span class="lang-cn">了解更多 <i class="fas fa-arrow-right ms-1"></i></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 核心改动：CV 下载区域 -->
+            <div class="text-center mt-5 pt-4 border-top">
+                <p class="lead mb-4">
+                    <span class="lang-en">For a complete list of experience and honors, please download my CV.</span>
+                    <span class="lang-cn">如需查看完整的工作经历与荣誉列表，请下载我的个人简历。</span>
+                </p>
+                <a href="#" class="btn btn-dark btn-lg px-5 rounded-pill shadow">
+                    <i class="fas fa-download me-2"></i> 
+                    <span class="lang-en">Download Full CV</span>
+                    <span class="lang-cn">下载完整简历 (PDF)</span>
+                </a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 3. Publications (发表文章) - 背景微灰以区分 -->
+    <section id="publications" class="bg-light">
+        <div class="container">
+            <h2 class="section-title"><span class="lang-en">Selected Publications</span><span class="lang-cn">代表性论文</span></h2>
+            
+            <!-- 论文 1 -->
+            <div class="pub-item">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h5 class="fw-bold mb-1">Giant magnetoresistance in graphene-based heterostructures</h5>
+                        <div class="text-muted fst-italic small mb-2">
+                            <strong>Your Name</strong>, A. Collaborator, B. Professor.
+                        </div>
+                        <div><span class="badge bg-dark me-2">Nature Materials</span> <span class="text-muted small">2024</span></div>
+                    </div>
+                    <div class="col-md-2 text-md-end mt-3 mt-md-0">
+                        <a href="#" class="btn btn-sm btn-outline-primary rounded-pill">PDF</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 论文 2 -->
+            <div class="pub-item">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h5 class="fw-bold mb-1">Ultra-sensitive photodetectors using MoS2 monolayers</h5>
+                        <div class="text-muted fst-italic small mb-2">
+                            C. Student, <strong>Your Name</strong> (Corresponding Author).
+                        </div>
+                        <div><span class="badge bg-dark me-2">Nano Letters</span> <span class="text-muted small">2023</span></div>
+                    </div>
+                    <div class="col-md-2 text-md-end mt-3 mt-md-0">
+                        <a href="#" class="btn btn-sm btn-outline-primary rounded-pill">PDF</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="#" class="text-decoration-none text-muted">
+                    <span class="lang-en">View Google Scholar Profile <i class="fas fa-external-link-alt small"></i></span>
+                    <span class="lang-cn">访问 Google Scholar 主页 <i class="fas fa-external-link-alt small"></i></span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Teaching Philosophy (教学理念) -->
+    <section id="teaching" class="bg-graphene">
+        <div class="container">
+            <h2 class="section-title"><span class="lang-en">Teaching Philosophy</span><span class="lang-cn">教学理念</span></h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8 bg-white p-5 shadow-sm rounded text-center">
+                    <i class="fas fa-chalkboard-teacher fa-3x text-secondary mb-4"></i>
+                    <p class="lead fst-italic text-muted">
+                        <span class="lang-en">"Bridging the gap between fundamental physics and engineering applications."</span>
+                        <span class="lang-cn">“在基础物理与工程应用之间架起桥梁。”</span>
+                    </p>
+                    <p class="mt-4">
+                        <span class="lang-en">I believe in research-led teaching. By introducing the latest developments in material science into the classroom, I aim to stimulate students' curiosity and critical thinking.</span>
+                        <span class="lang-cn">我坚持“以研促教”。通过将材料科学领域的最新进展引入课堂，我致力于激发学生的好奇心，并培养他们解决实际工程问题的批判性思维。</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Contact (联系方式) -->
+    <section id="contact">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="contact-box">
+                        <h2 class="section-title mb-5"><span class="lang-en">Get in Touch</span><span class="lang-cn">联系方式</span></h2>
+                        <div class="row">
+                            <div class="col-md-6 border-end-md">
+                                <h4 class="mb-4"><span class="lang-en">Contact Info</span><span class="lang-cn">基本信息</span></h4>
+                                <p><i class="fas fa-envelope me-3 text-secondary"></i> email@university.edu</p>
+                                <p><i class="fas fa-map-marker-alt me-3 text-secondary"></i> Engineering Hall, Room 402</p>
+                                <p class="text-muted small mt-4">
+                                    <span class="lang-en">Looking for highly motivated PhD students and Postdocs to join our group.</span>
+                                    <span class="lang-cn">诚招对二维材料研究感兴趣的博士生及博士后加入课题组。</span>
+                                </p>
+                            </div>
+                            <div class="col-md-6 text-center pt-4 pt-md-0 d-flex flex-column justify-content-center">
+                                <div class="d-flex justify-content-center gap-3">
+                                    <a href="#" class="btn btn-outline-dark rounded-circle p-3" style="width:60px;height:60px;"><i class="fab fa-twitter fa-lg"></i></a>
+                                    <a href="#" class="btn btn-outline-dark rounded-circle p-3" style="width:60px;height:60px;"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                                    <a href="#" class="btn btn-outline-dark rounded-circle p-3" style="width:60px;height:60px;"><i class="fab fa-github fa-lg"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container text-center">
+            <p>&copy; 2025 Dr. Your Name. Material Science Research Group.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentLang = 'en';
+        function toggleLanguage() {
+            const enElements = document.querySelectorAll('.lang-en');
+            const cnElements = document.querySelectorAll('.lang-cn');
+            if (currentLang === 'en') {
+                enElements.forEach(el => el.style.display = 'none');
+                cnElements.forEach(el => el.style.display = 'inline');
+                currentLang = 'cn';
+            } else {
+                cnElements.forEach(el => el.style.display = 'none');
+                enElements.forEach(el => el.style.display = 'inline');
+                currentLang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>
